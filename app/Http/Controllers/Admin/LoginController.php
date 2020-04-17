@@ -20,7 +20,7 @@ class LoginController extends Controller {
      */
     public function index(Request $request)
     {
-        if (!empty(session('staff_id'))) {
+        if (!empty(session('userId'))) {
             return redirect("admincp/home");
         }
         return view('Admin.login');
@@ -112,11 +112,8 @@ class LoginController extends Controller {
     public function logout(Request $request)
     {
         //清session
-        $request->session()->pull('telephone');
-        $request->session()->pull('staff_id');
-        $request->session()->pull('staff_sn');
-        $request->session()->pull('staff_name');
-        $request->session()->pull('staff_permission');
+        $request->session()->pull('userId');
+        $request->session()->pull('permissionInfo');
 
         return redirect('admincp/login');
     }
