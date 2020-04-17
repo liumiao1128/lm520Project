@@ -17,8 +17,15 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
-Route::get('/admincp', function () {
-    return redirect('admincp/login');
-});
+Route::get('/admincp/getCaptcha', 'Admin\LoginController@getCaptcha');//图片验证码
 
-Route::resource('/admincp/login', 'Admin\LoginController');
+Route::get('/admincp', function () {return redirect('admincp/login');}); // 默认跳转页
+
+Route::resource('/admincp/login', 'Admin\LoginController'); //登陆页
+Route::get('/admincp/logout', 'Admin\LoginController@logout');//登出页
+
+Route::get('/admincp/home', 'Admin\CommonController@home');
+Route::get('/admincp/welcome', 'Admin\CommonController@welcome');
+
+
+
