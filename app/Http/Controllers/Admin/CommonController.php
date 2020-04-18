@@ -21,6 +21,7 @@ class CommonController extends Controller
             return redirect('admincp/login');
         }
         $staff_permission = session('permissionInfo');
+//        dd($staff_permission);
         return view('Admin.Common.home', ['menu' => $staff_permission]);
     }
 

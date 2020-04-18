@@ -39,7 +39,7 @@ class MenuModel extends Model {
             }
         }
         //菜单
-        $permissionList = self::select('MenuId', 'SystemType', 'MenuName', 'ParentId', 'MenuType', 'OperationType', 'Keyword','IcoClass','WebUrl')
+        $permissionList = self::select('MenuId', 'SystemType', 'MenuName', 'ParentId', 'MenuType', 'OperationType', 'Keyword','IcoClass','WebUrl','MenuUrl')
             ->where('IsDeleted', 0)->where('Status', 1)->where('MenuType', 1)
             ->orderBy('Sort', 'desc')
             ->get()
@@ -67,7 +67,7 @@ class MenuModel extends Model {
                 if (in_array($row['MenuId'], $ids_arr) || $role_id == 'Admin') {
                     if (!empty($permission_arr[$row['ParentId']])) {
                         $permission_arr[$row['ParentId']]['son'][$row['MenuId']] = $row;
-                        $permission_arr[$row['ParentId']]['son'][$row['MenuId']]['son'] = [];
+//                        $permission_arr[$row['ParentId']]['son'][$row['MenuId']]['son'] = [];
                     }
                 }
             }
