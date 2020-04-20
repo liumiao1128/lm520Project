@@ -39,13 +39,13 @@ class MenuModel extends Model {
             }
         }
         //菜单
-        $permissionList = self::select('MenuId', 'SystemType', 'MenuName', 'ParentId', 'MenuType', 'OperationType', 'Keyword','IcoClass','WebUrl','MenuUrl')
+        $permissionList = self::select('MenuId', 'SystemType', 'MenuName', 'ParentId', 'MenuType', 'OperationType', 'Keyword', 'IcoClass', 'WebUrl', 'MenuUrl')
             ->where('IsDeleted', 0)->where('Status', 1)->where('MenuType', 1)
             ->orderBy('Sort', 'desc')
             ->get()
             ->toArray();
         //操作
-        $operatingList = self::select('MenuId', 'SystemType', 'MenuName', 'ParentId', 'MenuType', 'OperationType', 'Keyword','IcoClass','WebUrl')
+        $operatingList = self::select('MenuId', 'SystemType', 'MenuName', 'ParentId', 'MenuType', 'OperationType', 'Keyword', 'IcoClass', 'WebUrl')
             ->where('IsDeleted', 0)->where('Status', 1)->where('MenuType', 2)
             ->orderBy('Sort', 'desc')
             ->get()
@@ -133,7 +133,7 @@ class MenuModel extends Model {
     {
         $where['SystemType'] = $SystemType;
         $where['Status'] = 1;
-        $permissionList = self::select('MenuId', 'SystemType', 'MenuName', 'WebUrl', 'ParentId', 'Sort', 'MenuType', 'OperationType', 'Keyword','IcoClass','Remark','IsCommonly')->where($where)
+        $permissionList = self::select('MenuId', 'SystemType', 'MenuName', 'WebUrl', 'ParentId', 'Sort', 'MenuType', 'OperationType', 'Keyword', 'IcoClass', 'Remark', 'IsCommonly')->where($where)
             ->orderBy('CreateTime', 'asc')
             ->get()
             ->toArray();
@@ -162,5 +162,43 @@ class MenuModel extends Model {
             }
         }
         return $record_arr;
+    }
+
+
+    /**
+     * 得到树列表
+     * @param $SystemType
+     * @return array
+     */
+    public static function getPermissionTreeList1($SystemType)
+    {
+        $where['SystemType'] = $SystemType;
+        $permissionList = self::select('MenuId', 'SystemType', 'MenuName', 'WebUrl', 'ParentId', 'Sort', 'MenuType', 'OperationType', 'Keyword', 'IcoClass', 'Remark', 'IsCommonly','Status','MenuUrl')->where($where)
+            ->orderBy('CreateTime', 'asc')
+            ->get()
+            ->toArray();
+
+        $permission_arr = array();
+        self::createTreeList1($permission_arr, $permissionList, '', 0);
+
+        return $permission_arr;
+    }
+
+    /**
+     * 产生树列表
+     * @param $record_arr 最终返回的树状列表
+     * @param $record_list
+     * @param $parent_id
+     * @param $level
+     */
+    public static function createTreeList1(&$record_arr, &$record_list, $parent_id, $level)//注意：$record_arr、$record_list是引用传递
+    {
+        foreach ($record_list as $key => $value) {
+            if ($value['ParentId'] == $parent_id) {
+                $value['level'] = $level + 1;
+                $record_arr[] = $value;
+                self::createTreeList1($record_arr, $record_list, $value['MenuId'], $value['level']);
+            }
+        }
     }
 }

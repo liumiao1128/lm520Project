@@ -8,7 +8,7 @@
 </head>
 <script>
     layui.config({
-        base: "../layui2.5.4/" //静态资源所在路径
+        base: "{{ asset('layui2.5.4') }}/" //静态资源所在路径
     }).extend({
         index: 'lib/index', //主入口模块
         selectN: 'layui/lay/modules/selectN',
