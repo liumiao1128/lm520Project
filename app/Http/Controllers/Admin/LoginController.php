@@ -87,6 +87,7 @@ class LoginController extends Controller {
                 'permissionInfo' => $arr['permission_arr'],
                 'operatingInfo' => $arr['operating_arr'],
             ];
+//            setcookie('username','111',0,'/','www.lm5207.cn');
             session($result);
             return redirect("admincp/home");
         }

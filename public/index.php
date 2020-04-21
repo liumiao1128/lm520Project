@@ -6,6 +6,14 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylor@laravel.com>
  */
+//print_r('当前域名：'.$_SERVER['SERVER_NAME'].'<br/>');
+//$username = isset($_COOKIE['username']) ? $_COOKIE['username'] : '';
+//if(!empty($username)){
+//    echo '已登录,用户名：'.$username;
+//}else{
+//    echo '尚未登录，';
+//    echo '<a href="http://passport.test.com">请前往登录</a>';
+//}
 
 define('LARAVEL_START', microtime(true));
 
